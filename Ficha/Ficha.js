@@ -1,5 +1,42 @@
-const cadastroFicha = document.querySelector("[#cadastro]");
-console.log(cadastroFicha);
+const API_BASE_URL = 'https://shawee-api.herokuapp.com/'
+
+const cadastroFicha = document.querySelector("form.cadastro");
+
+cadastroFicha.addEventListener("submit", event => {
+    event.preventDefault();
+
+    if (validaCPF(cpf) && cpf.length === 11) {
+        cadastrarFicha(data);
+    } else {
+        alert("O CPF não é válido");
+    }
+})
+const data = {
+    birth: document.querySelector('#idade').value,
+    city: document.querySelector('#cidade').value,
+    document: document.querySelector('#cpf').value,
+    email: document.querySelector('#email').value,
+    fullName: document.querySelector('#nome').value,
+    password: document.querySelector('#senha').value,
+    passwordConfirmation: document.querySelector('#reSenha').value,
+   // state: document.querySelector('#uf').value,
+    username: document.querySelector('#userName').value
+}
+const cadastrarFicha = (data) => {
+
+    return fetch(`${API_BASE_URL}/user`, {
+        method: 'POST',
+        headers: {
+            autorization: 'token',
+            'Content-type': 'application/json'
+        },
+        body: JSON.stringify(data)
+    })
+        .then(resposta => {
+            return resposta.body
+        })
+
+}
 
 function verificaCPFInvalidos(cpf) {
     const cpfsInvalidos = [
@@ -21,7 +58,7 @@ function verificaCPFInvalidos(cpf) {
 function verificaPrimeiroDigito(cpf) {
     const peso = 11;
     const totalDeDigitosPrimeiraParte = 9;
-    const digitoDeVerificacao = parseInt(cpf.substring(9, 10));
+    const digitoDeVerificacao = (cpf.value.substring(9, 10));
     return verificaDigito(
         cpf,
         totalDeDigitosPrimeiraParte,
@@ -33,7 +70,7 @@ function verificaPrimeiroDigito(cpf) {
 function verificaSegundoDigito(cpf) {
     const peso = 12;
     const totalDeDigitosSegundaParte = 10;
-    const digitoDeVerificacao = parseInt(cpf.substring(10, 11));
+    const digitoDeVerificacao = parseInt(cpf.value.substring(10, 11));
     return verificaDigito(
         cpf,
         totalDeDigitosSegundaParte,
@@ -52,7 +89,7 @@ function verificaDigito(cpf, totalDeDigitos, peso, digitoDeVerificacao) {
 function somaNumerosCPF(cpf, totalDeDigitos, peso) {
     let soma = 0;
     for (let indice = 1; indice <= totalDeDigitos; indice++) {
-        soma += parseInt(cpf.substring(indice - 1, indice)) * (peso - indice);
+        soma += parseInt(cpf.value.substring(indice - 1, indice)) * (peso - indice);
     }
     return soma;
 }
@@ -63,12 +100,4 @@ function validaCPF(cpf) {
         verificaSegundoDigito(cpf) &&
         verificaCPFInvalidos(cpf)
     );
-}
-
-const cadastrarFicha = () => {
-    if (validaCPF(cpf) && cpf.length === 11) {
-        cadastrarCliente(nome, cpf);
-    } else {
-        alert("O CPF não é válido");
-    }
 }
