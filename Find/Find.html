@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="utf-8" />
+    <title>Find</title>
+    <link rel="stylesheet" href="../stylesheet.css">
+
+</head>
+<header>
+    <p> Pedidos e ofertas</p>
+    <a id="link-menu" href="../Menu/Menu.html">Menu</a>
+</header>
+
+<body>
+    <form class="novaReq">
+        <input type="radio" id="pedido">
+        <label for="pedido">Pedido</label>
+        <input type="radio" id="oferta">
+        <label for="oferta">Oferta</label>
+        <label for="categoria">Categorias:</label>
+        <select id="categoria">
+            <option>Linguas</option>
+            <option>Esportes</option>
+            <option>Cultural</option>
+            <option>Social</option>
+            <option>Educação</option>
+        </select>
+        <label> Descreva em uma palavra o que você quer</label>
+        <input type="text">
+        <input type="submit" value="Enviar">
+    </form>
+    <div id="contatos">
+        <a href="#"><img id="contato" src="#"></a> 
+    </div>
+    <script>
+        const mostrarContatos = () =>{document.getElementById("contatos").style.display="flex"}
+    </script>
+
+</body>
+<footer>
+
+</footer>
+
+</html>
